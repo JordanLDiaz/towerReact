@@ -1,6 +1,7 @@
 import { Auth0Provider } from "@bcwdev/auth0provider";
 import BaseController from "../utils/BaseController";
 import { eventsService } from "../services/EventsService.js";
+import { ticketsService } from "../services/TicketsService";
 
 export class EventsController extends BaseController {
     constructor() {
@@ -8,9 +9,11 @@ export class EventsController extends BaseController {
         this.router
             .get('', this.getAllEvents)
             .get('/:eventId', this.getEventById)
+            .get('/:eventId/tickets', this.getEventTickets)
             .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.createEvent)
             .put('/:eventId', this.updateEvent)
+            .delete('/:eventId', this.cancelEvent)
     }
 
     async getAllEvents(req, res, next) {
@@ -32,6 +35,18 @@ export class EventsController extends BaseController {
             next(error)
         }
     }
+
+    async getEventTickets(req, res, next) {
+        try {
+            // We need the eventId in order to grab one event
+            const eventId = req.params.eventId
+            const eventTickets = await ticketsService.getEventTickets(eventId)
+            return res.send(eventTickets)
+        } catch (error) {
+            next(error)
+        }
+    }
+
 
     async createEvent(req, res, next) {
         try {
@@ -59,6 +74,17 @@ export class EventsController extends BaseController {
             // pass all of the above to the service and expect to get updated returned.
             const event = await eventsService.updateEvent(eventId, updateData, userId)
             return res.send(event)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async cancelEvent(req, res, next) {
+        try {
+            const eventId = req.params.eventId
+            const userId = req.userInfo.id
+            const message = await eventsService.cancelEvent(eventId, userId)
+            return res.send(message)
         } catch (error) {
             next(error)
         }

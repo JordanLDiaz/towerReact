@@ -10,7 +10,7 @@ class EventsService {
     async getEventById(eventId) {
         const event = await dbContext.Events.findById(eventId)
         if (!event) {
-            throw new BadRequest('No event found at this id')
+            throw new BadRequest('No event found at this id.')
         }
         return event
     }
@@ -22,9 +22,9 @@ class EventsService {
     }
 
     async updateEvent(eventId, updateData, userId) {
-        // REVIEW why is this not working? 
         const event = await this.getEventById(eventId)
         if (event.creatorId != userId) throw new Forbidden("You are not allowed to edit another user's event.");
+        if (event.isCanceled) throw new BadRequest('You may not edit a canceled event.');
         event.name = updateData.name ? updateData.name : event.name
         event.description = updateData.description ? updateData.description : event.description
         event.coverImg = updateData.coverImg ? updateData.coverImg : event.coverImg
@@ -34,6 +34,14 @@ class EventsService {
         event.type = updateData.type ? updateData.type : event.type
         await event.save()
         return event
+    }
+
+    async cancelEvent(eventId, userId) {
+        const event = await this.getEventById(eventId)
+        if (event.creatorId != userId) throw new Forbidden('You may not cancel an event that is not yours.')
+        event.isCanceled = !event.isCanceled
+        await event.save()
+        return `${event.name} has been canceled`
     }
 }
 
