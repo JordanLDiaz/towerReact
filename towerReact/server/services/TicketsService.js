@@ -28,7 +28,7 @@ class TicketsService {
   }
 
   async deleteTicket(ticketId, userId) {
-    // grab the ticket by its id from the db, null check and remove the ticket
+    // grab the ticket by its id from the db, null check, check that user and account match and remove the ticket
     const ticket = await dbContext.Tickets.findById(ticketId)
     if (!ticket) {
       throw new BadRequest('Invalid ticket id.')
@@ -38,7 +38,7 @@ class TicketsService {
     }
     await ticket.remove()
 
-    // grab the event by its ticket.eventId, increase the events capacity, save it, return message
+    // grab the event by its ticket.eventId, increase the events capacity, save it, return ticket
     const event = await eventsService.getEventById(ticket.eventId)
     event.capacity++
     await event.save()
