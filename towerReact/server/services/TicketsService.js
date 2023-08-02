@@ -8,9 +8,10 @@ class TicketsService {
     if (event.capacity == 0) {
       throw new BadRequest('You cannot get a ticket for an event that is full.')
     }
+    if (event.isCanceled) {
+      throw new BadRequest('You cannot purchase a ticket for a canceled event.')
+    }
     const ticket = await dbContext.Tickets.create(ticketData)
-    event.capacity--
-    await event.save()
     await ticket.populate('profile event')
     return ticket
   }
@@ -29,7 +30,7 @@ class TicketsService {
 
   async deleteTicket(ticketId, userId) {
     // grab the ticket by its id from the db, null check, check that user and account match and remove the ticket
-    const ticket = await dbContext.Tickets.findById(ticketId)
+    const ticket = await dbContext.Tickets.findById(ticketId).populate('event')
     if (!ticket) {
       throw new BadRequest('Invalid ticket id.')
     }
@@ -40,7 +41,6 @@ class TicketsService {
 
     // grab the event by its ticket.eventId, increase the events capacity, save it, return ticket
     const event = await eventsService.getEventById(ticket.eventId)
-    event.capacity++
     await event.save()
     return ticket
   }

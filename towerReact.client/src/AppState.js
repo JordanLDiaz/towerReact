@@ -5,8 +5,17 @@ import { isValidProp } from "./utils/isValidProp.js"
 class ObservableAppState {
 
   user = null
-  /** @type {import('./models/Account.js').Account} */
+  /** @type {import('./models/Account.js').Account|null} */
   account = null
+
+  /** @type {import('./models/TowerEvent.js').TowerEvent[]} */
+  towerEvents = []
+
+  /** @type {import('./models/TowerEvent.js').TowerEvent|null} */
+  activeTowerEvent = null
+
+  /** @type {import('./models/Comment.js').Comment[]} */
+  comments = []
 
   constructor() {
     makeAutoObservable(this)

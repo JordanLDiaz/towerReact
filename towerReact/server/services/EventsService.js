@@ -3,12 +3,12 @@ import { BadRequest, Forbidden } from "../utils/Errors"
 
 class EventsService {
     async getAllEvents() {
-        const events = await dbContext.Events.find().populate('creator')
+        const events = await dbContext.Events.find().populate('creator ticketCount')
         return events
     }
 
     async getEventById(eventId) {
-        const event = await dbContext.Events.findById(eventId)
+        const event = await dbContext.Events.findById(eventId).populate('ticketCount')
         if (!event) {
             throw new BadRequest('No event found at this id.')
         }
@@ -17,7 +17,7 @@ class EventsService {
 
     async createEvent(eventData) {
         const event = await dbContext.Events.create(eventData)
-        await event.populate('creator')
+        await event.populate('creator ticketCount')
         return event
     }
 

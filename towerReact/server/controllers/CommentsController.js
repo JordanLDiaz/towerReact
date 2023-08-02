@@ -14,7 +14,7 @@ export class CommentsController extends BaseController {
     try {
       // aliased out req.body, checked that creatorID (which references account, but matches what we have in model), pass commentData to service, and return comment
       const commentData = req.body
-      req.body.creatorId = req.userInfo.id
+      commentData.creatorId = req.userInfo.id
       const comment = await commentsService.createComment(commentData)
       return res.send(comment)
     } catch (error) {

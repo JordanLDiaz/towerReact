@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from '../assets/img/cw-logo.png';
+// import logo from '../assets/img/cw-logo.png';
 import Login from "./Login.jsx";
 
 export function Navbar() {
@@ -8,7 +8,9 @@ export function Navbar() {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-3">
       <Link className="navbar-brand d-flex" to={''}>
         <div className="d-flex flex-column align-items-center">
-          <img alt="logo" src={logo} height="45" />
+          {/* <img alt="logo" src={logo} height="45" /> */}
+          <h1>Tower</h1>
+          <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Create Event</button>
         </div>
       </Link>
       <button
@@ -25,9 +27,9 @@ export function Navbar() {
       <div className="collapse navbar-collapse" id="navbarText">
         <ul className="navbar-nav me-auto">
           <li>
-            <Link to={'About'} className="btn text-success lighten-30 selectable text-uppercase">
+            {/* <Link to={'About'} className="btn text-success lighten-30 selectable text-uppercase">
               About
-            </Link>
+            </Link> */}
           </li>
         </ul>
         <Login />

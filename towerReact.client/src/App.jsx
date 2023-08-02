@@ -11,12 +11,12 @@ export function App() {
         <Navbar />
       </header>
 
-      <main>
+      <main className="container-fluid">
         <Outlet />
       </main>
 
       <footer className="bg-dark text-light text-center p-3 ">
-        Made with 💖 by CodeWorks
+        Made with 💖 by Jordan
       </footer>
 
     </div>
