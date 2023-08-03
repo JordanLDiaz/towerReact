@@ -29,10 +29,10 @@ export default function CommentCard({ comment }) {
           <img src={comment.creator.picture} alt={comment.creator.name} className="img-fluid rounded m-1" />
           <div className="d-flex flex-column">
             <h3 className="mx-3">{comment.creator.name}</h3>
-            <h5 className="text-center">{comment.body}</h5>
+            <p className="mx-3">{comment.body}</p>
           </div>
         </div>
-        <div className={account?.id == comment.creatorId ? "d-flex" : "d-none"}>
+        <div className={account?.id == comment.creatorId ? "d-flex justify-content-end" : "d-none"}>
           <button className="btn btn-danger w-25 m-1" onClick={deleteComment}>Delete</button>
         </div>
       </div>
