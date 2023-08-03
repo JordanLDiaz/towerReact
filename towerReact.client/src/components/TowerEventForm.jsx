@@ -78,7 +78,7 @@ function TowerEventForm() {
           <label htmlFor="floatingInput">Event Date</label>
         </div>
         <select defaultValue={editable.type} onChange={bindEditable} className="form-select mb-2" aria-label="Default select type" name="type" id="type" required>
-          <option selected>Select an event type</option>
+          <option>Select an event type</option>
           {options}
         </select>
 

@@ -1,3 +1,5 @@
+import { makeAutoObservable } from "mobx"
+
 export class TowerEvent {
   constructor(data = {}) {
     this.id = data.id
@@ -11,5 +13,9 @@ export class TowerEvent {
     this.type = data.type
     this.creator = data.creator
     this.creatorId = data.creatorId
+
+
+    // NOTE this most likely only works within this template but should make things reactive 
+    // makeAutoObservable(this)
   }
 }

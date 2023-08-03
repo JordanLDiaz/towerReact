@@ -23,18 +23,21 @@ export default function CommentCard({ comment }) {
 
 
   return (
-
     <div className="CommentCard">
-      <div className="card">
-        <div className="">{comment.creator.name}</div>
-        <div className="">{comment.body}</div>
+      <div className="card my-3">
+        <div className="d-flex">
+          <img src={comment.creator.picture} alt={comment.creator.name} className="img-fluid rounded m-1" />
+          <div className="d-flex flex-column">
+            <h3 className="mx-3">{comment.creator.name}</h3>
+            <h5 className="text-center">{comment.body}</h5>
+          </div>
+        </div>
         <div className={account?.id == comment.creatorId ? "d-flex" : "d-none"}>
-          <button className="btn btn-danger w-50" onClick={deleteComment}>Delete</button>
+          <button className="btn btn-danger w-25 m-1" onClick={deleteComment}>Delete</button>
         </div>
       </div>
     </div>
   )
-
 }
 
 CommentCard.propTypes = {

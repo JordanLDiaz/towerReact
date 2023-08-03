@@ -26,10 +26,26 @@ class TowerEventsService {
     AppState.comments = res.data.map(c => new Comment(c))
   }
 
+
   async createTowerEvent(eventData) {
     const res = await api.post('api/events', eventData)
     logger.log('[CREATING AN EVENT]', res.data)
     AppState.towerEvents.push(new TowerEvent(res.data))
+  }
+
+  async cancelTowerEvent(eventId) {
+    const res = await api.delete(`api/events/${eventId}`)
+    // @ts-ignore
+    AppState.activeTowerEvent.isCanceled = true
+    // logger.log('[BEFORE CANCEL]', AppState.activeTowerEvent?.isCanceled)
+    // @ts-ignore
+    // event.isCanceled = true
+    // logger.log('[CANCELING EVENT]', AppState.activeTowerEvent?.isCanceled)
+    // let index = AppState.towerEvents.findIndex(t => t.id == eventId)
+    // let updateEvent = new TowerEvent(res.data)
+    // AppState.towerEvents.splice(index, 1, updateEvent)
+
+
   }
 
 }

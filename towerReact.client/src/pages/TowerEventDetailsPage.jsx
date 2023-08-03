@@ -55,13 +55,15 @@ function TowerEventDetailsPage() {
         </section>
 
         <section className="row justify-content-center">
-          <div className="col-10">
+          <div className="col-8">
             <CommentForm />
           </div>
         </section>
 
-        <section className="row">
-          {comments}
+        <section className="row justify-content-center">
+          <div className="col-8 d-flex justify-content-center">
+            {comments}
+          </div>
         </section>
       </div>
     </div>
